@@ -2,6 +2,7 @@
 // and stops at red lights, parked cars, and spawning around the player.
 function updateSolmarinaTraffic(dt) {
   const input = G.input;
+  G.collisionCd = Math.max(0, (G.collisionCd || 0) - dt);
   for (const car of G.cars) {
     if (car.driver === 'player') updateSolmarinaPlayerCar(car, dt, input);
     else if (car.driver === 'traffic') updateSolmarinaTrafficCar(car, dt);
@@ -25,7 +26,6 @@ function updateSolmarinaTraffic(dt) {
       G.cars.splice(i, 1);
     }
   }
-  // Car-car separation so traffic does not pile up.
   for (let i = 0; i < G.cars.length; i++) for (let j = i + 1; j < G.cars.length; j++) {
     const a = G.cars[i], b = G.cars[j];
     const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy);
@@ -35,8 +35,11 @@ function updateSolmarinaTraffic(dt) {
       if (b.driver !== 'player') { b.x += nx * push; b.y += ny * push; }
       if ((a.driver === 'player' || b.driver === 'player') && Math.abs(a.speed - b.speed) > 120) {
         const hit = a.driver === 'player' ? a : b;
-        damageSolmarinaCar(hit, 6);
-        if (G.rng() < 0.4) playGameSound('crash', 0.3);
+        if (!G.collisionCd || G.collisionCd <= 0) {
+          damageSolmarinaCar(hit, 6);
+          G.collisionCd = 0.4;
+          if (G.rng() < 0.4) playGameSound('crash', 0.3);
+        }
       }
     }
   }

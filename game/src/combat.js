@@ -90,7 +90,7 @@ function spawnSolmarinaGang(x, y, n) {
   for (let i = 0; i < n; i++) {
     G.peds.push({
       x: x + (G.rng() - 0.5) * 120, y: y + (G.rng() - 0.5) * 120,
-      angle: 0, speed: 110, color: '#3a3a44', bubble: null, bubbleTime: 0,
+      angle: 0, speed: 110, color: '#a83a3a', bubble: null, bubbleTime: 0,
       fleeing: false, waiting: false, health: 70, gang: true, cop: false,
       cooldown: 0.5 + G.rng(), moving: false,
     });

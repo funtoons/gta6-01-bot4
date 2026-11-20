@@ -17,7 +17,7 @@ function updateSolmarinaPolice(dt) {
   if (G.wanted < 4) G.heli = null;
   if (G.heli) {
     G.heli.x += (p.x - G.heli.x) * 0.5 * dt;
-    G.heli.y += (p.y - 240 - G.heli.y) * 0.5 * dt;
+    G.heli.y += (p.y - 190 - G.heli.y) * 0.5 * dt;
   }
   // Evade: no cop close and no line of sight for a while clears a star.
   let seen = false;
@@ -76,8 +76,10 @@ function updateSolmarinaPoliceCar(car, dt) {
   car.speed += (target - car.speed) * 1.2 * dt;
   moveSolmarinaCar(car, dt);
   // Ramming: a hard hit on the player's car damages it and shakes the screen.
-  if (p.car && d < 52 && Math.abs(car.speed) > 150) {
+  car.ramCd = Math.max(0, (car.ramCd || 0) - dt);
+  if (p.car && d < 52 && Math.abs(car.speed) > 150 && car.ramCd <= 0) {
     damageSolmarinaCar(p.car, 4);
+    car.ramCd = 0.6;
     G.shake = Math.max(G.shake, 6);
     if (G.rng() < 0.3) playGameSound('crash', 0.25);
   }

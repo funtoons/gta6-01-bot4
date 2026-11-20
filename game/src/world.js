@@ -54,7 +54,7 @@ function generateSolmarinaWorld(seed) {
     { x: 580, y: 1060, text: 'PALM COURT GOLF CLUB' },
   ];
   for (let k = 0; k < 7; k++) world.boats.push({ x: randomRange(rng, 2530, 2580), y: randomRange(rng, 300, 2300), a: randomRange(rng, 0, 6.28) });
-  world.ramps = [{ x: 1750, y: 2200, a: 0 }, { x: 600, y: 1520, a: 1.57 }, { x: 2200, y: 1060, a: 3.14 }];
+  world.ramps = [{ x: 1750, y: 2200, a: 0 }, { x: 600, y: 1520, a: 0 }, { x: 2200, y: 1060, a: 0 }];
   world.shops = [
     { kind: 'respray', name: 'Sunshine Spray', x: 1060, y: 1980 },
     { kind: 'gunshop', name: 'Iron & Sons', x: 1520, y: 600 },

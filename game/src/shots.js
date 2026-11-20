@@ -8,7 +8,8 @@ function stageSolmarinaShot(name) {
   if (name === 'chase') {
     // One frame, the whole chase: four-star heat, helicopter, traffic.
     const car = spawnSolmarinaCar('muscle', 1520, 1520, 0, 'player');
-    car.speed = 300; p.car = car; p.x = car.x; p.y = car.y;
+    car.speed = 300; car.color = '#c83828'; car.damage = -500;
+    p.car = car; p.x = car.x; p.y = car.y; p.armor = 100;
     G.wanted = 4; G.evade = 0;
     G.cameraZoom = 1.18;
     const spots = [[1380, 1440, 0.4], [1660, 1600, -0.3], [1420, 1660, 0.2], [1700, 1400, -0.5]];
@@ -17,9 +18,9 @@ function stageSolmarinaShot(name) {
       pc.speed = 280;
       G.cops.push({ kind: 'car', car: pc, name: randomPick(G.rng, CONFIG.dispatchNames), status: 'PURSUIT' });
     }
-    G.heli = { x: p.x + 160, y: p.y - 260 };
+    G.heli = { x: p.x + 160, y: p.y - 190 };
     G.cops[0].status = 'SPOTLIGHT'; G.cops[1].status = 'RAMMING'; G.cops[2].status = 'ROADBLOCK';
-    const tspots = [[1600, 1520], [1440, 1520], [1520, 1440], [1520, 1600], [1660, 1440], [1380, 1600]];
+    const tspots = [[1600, 1520], [1440, 1520], [1520, 1440], [1520, 1600], [1660, 1520], [1380, 1520]];
     for (const t of tspots) {
       const tc = spawnSolmarinaCar(randomPick(G.rng, ['sedan', 'coupe', 'taxi', 'van']), t[0], t[1], randomPick(G.rng, [0, 1.57, 3.14]), 'traffic');
       tc.speed = 120;
@@ -35,8 +36,10 @@ function stageSolmarinaShot(name) {
     p.x = 1290; p.y = 1290; p.car = null;
     G.cameraZoom = 1.1;
     for (let i = 0; i < 18; i++) {
+      const px = 1290 + (G.rng() - 0.5) * 420, py = 1290 + (G.rng() - 0.5) * 420;
+      if (solmarinaHitsBuilding(px, py, 10)) continue;
       G.peds.push({
-        x: 1290 + (G.rng() - 0.5) * 420, y: 1290 + (G.rng() - 0.5) * 420,
+        x: px, y: py,
         angle: randomPick(G.rng, [0, 1.57, 3.14, 4.71]), speed: randomRange(G.rng, 40, 80),
         color: randomPick(G.rng, ['#e07820', '#3a7ab8', '#b83a7a', '#3a8a5a', '#c8a83a']),
         bubble: i === 2 ? 'Sunset in Solmarina!' : null, bubbleTime: 3,
@@ -54,12 +57,14 @@ function stageSolmarinaShot(name) {
   } else if (name === 'mission') {
     // Harbor Heat, mid-fight at the Gulls warehouse.
     p.x = 1900; p.y = 810; p.car = null;
-    p.weapon = 'pistol'; p.ammo = 48;
-    G.cameraZoom = 1.05;
-    spawnSolmarinaGang(2050, 810, 5);
+    p.weapon = 'pistol'; p.ammo = 48; p.armor = 60;
+    G.cameraZoom = 1.35;
+    spawnSolmarinaGang(1960, 810, 5);
     spawnExplosion(2080, 780, false);
-    const mc = spawnSolmarinaCar('muscle', 1980, 900, 0.5, 'parked');
+    const mc = spawnSolmarinaCar('muscle', 1960, 860, 0.5, 'parked');
     mc.burning = true; mc.burnTime = 5; mc.damage = 80;
+    const mc2 = spawnSolmarinaCar('sedan', 2050, 720, 0, 'parked');
+    mc2.burning = true; mc2.burnTime = 5; mc2.damage = 80;
     G.wanted = 3;
     const pc = spawnSolmarinaCar('police', 1750, 810, 0, 'police');
     pc.speed = 240;
@@ -77,6 +82,7 @@ function stageSolmarinaShot(name) {
     G.stats.cashEarned = 18400; G.cash = 12650;
     G.stats.carsStolen = 12; G.stats.fares = 6; G.stats.packages = 9;
     G.stats.bestStunt = 42; G.stats.playTime = 3720;
+    saveSolmarinaGame();
     p.x = 1290; p.y = 1290;
   }
 }

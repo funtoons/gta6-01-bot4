@@ -167,7 +167,7 @@ function drawSolmarinaCar(ctx, car) {
     ctx.fillStyle = flash ? '#ff3030' : '#3050ff';
     ctx.fillRect(-6, -13, 12, 4);
   }
-  if (car.burning) { drawSolmarinaGlow(ctx, 0, 0, 30, 'rgba(255,120,30,0.6)'); }
+  if (car.burning) { drawSolmarinaGlow(ctx, 0, 0, 20, 'rgba(255,120,30,0.45)'); }
   if (car.damage > 60) { ctx.fillStyle = 'rgba(0,0,0,0.4)'; ctx.fillRect(-23, -11, 12, 22); }
   ctx.restore();
   if (car === G.player.car) {
@@ -187,8 +187,9 @@ function drawSolmarinaPed(ctx, ped) {
     ctx.fillStyle = '#3050ff'; ctx.fillRect(ped.x - 7, ped.y - 4 + bob, 14, 3);
   }
   if (ped.bubble) {
+    const bw = ctx.measureText(ped.bubble).width + 18;
     ctx.fillStyle = 'rgba(255,255,255,0.92)';
-    ctx.beginPath(); ctx.roundRect(ped.x - 34, ped.y - 40 + bob, 68, 18, 8); ctx.fill();
+    ctx.beginPath(); ctx.roundRect(ped.x - bw / 2, ped.y - 40 + bob, bw, 18, 8); ctx.fill();
     ctx.fillStyle = '#222'; ctx.font = '9px sans-serif'; ctx.textAlign = 'center';
     ctx.fillText(ped.bubble, ped.x, ped.y - 28 + bob);
   }
@@ -207,14 +208,14 @@ function drawSolmarinaPlayer(ctx) {
   ctx.beginPath(); ctx.arc(p.x, p.y, 20, 0, 6.29); ctx.stroke();
 }
 function drawSolmarinaHeli(ctx, heli) {
-  ctx.save(); ctx.translate(heli.x, heli.y);
+  ctx.save(); ctx.translate(heli.x, heli.y); ctx.scale(1.3, 1.3);
   // Spotlight cone onto the player.
-  const px = G.player.x, py = G.player.y;
-  const grad = ctx.createLinearGradient(heli.x, heli.y, px, py);
-  grad.addColorStop(0, 'rgba(255, 250, 200, 0.35)'); grad.addColorStop(1, 'rgba(255, 250, 200, 0.05)');
+  const px = (G.player.x - heli.x) / 1.3, py = (G.player.y - heli.y) / 1.3;
+  const grad = ctx.createLinearGradient(0, 0, px, py);
+  grad.addColorStop(0, 'rgba(255, 250, 200, 0.6)'); grad.addColorStop(1, 'rgba(255, 250, 200, 0.12)');
   ctx.fillStyle = grad;
-  ctx.beginPath(); ctx.moveTo(heli.x - 8, heli.y + 6); ctx.lineTo(px - 40, py - 30); ctx.lineTo(px + 40, py + 30); ctx.closePath(); ctx.fill();
-  ctx.fillStyle = 'rgba(255,250,200,0.25)';
+  ctx.beginPath(); ctx.moveTo(-8, 6); ctx.lineTo(px - 40, py - 30); ctx.lineTo(px + 40, py + 30); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = 'rgba(255,250,200,0.4)';
   ctx.beginPath(); ctx.ellipse(px, py, 46, 34, 0, 0, 6.29); ctx.fill();
   ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.beginPath(); ctx.ellipse(4, 8, 22, 9, 0, 0, 6.29); ctx.fill();
   ctx.fillStyle = '#20242c'; ctx.beginPath(); ctx.ellipse(0, 0, 20, 9, 0, 0, 6.29); ctx.fill();

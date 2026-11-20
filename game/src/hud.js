@@ -93,17 +93,14 @@ function drawSolmarinaCash(ctx) {
   ctx.fillText(hh + ':' + mm + '  •  ' + CONFIG.radioStations[G.radio], 1250, 64);
 }
 function drawSolmarinaHealth(ctx) {
-  solmarinaPanel(ctx, 16, 140, 220, 52);
+  solmarinaPanel(ctx, 16, 164, 220, 64);
   ctx.fillStyle = '#ffffff'; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'left';
-  ctx.fillText('HEALTH', 30, 158);
-  ctx.fillStyle = '#333'; ctx.fillRect(30, 164, 150, 8);
-  ctx.fillStyle = '#3aff5a'; ctx.fillRect(30, 164, 150 * Math.max(0, G.player.health) / 100, 8);
-  ctx.fillStyle = '#ffffff'; ctx.fillText('ARMOR', 30, 186);
-  ctx.fillStyle = '#333'; ctx.fillRect(30, 176, 150, 6);
-  ctx.fillStyle = '#5aaaff'; ctx.fillRect(30, 176, 150 * Math.max(0, G.player.armor) / 100, 6);
-  ctx.fillStyle = '#ffd23a'; ctx.font = 'bold 12px sans-serif'; ctx.textAlign = 'right';
-  const rank = CONFIG.respectRanks[Math.min(4, Math.floor(G.stats.missions / 2))];
-  ctx.fillText('RESPECT: ' + rank.toUpperCase(), 236, 158);
+  ctx.fillText('HEALTH', 30, 182);
+  ctx.fillStyle = '#333'; ctx.fillRect(30, 188, 150, 8);
+  ctx.fillStyle = '#3aff5a'; ctx.fillRect(30, 188, 150 * Math.max(0, G.player.health) / 100, 8);
+  ctx.fillStyle = '#ffffff'; ctx.fillText('ARMOR', 30, 210);
+  ctx.fillStyle = '#333'; ctx.fillRect(30, 216, 150, 6);
+  ctx.fillStyle = '#5aaaff'; ctx.fillRect(30, 216, 150 * Math.max(0, G.player.armor) / 100, 6);
 }
 function drawSolmarinaDispatch(ctx) {
   if (G.wanted === 0) return;
@@ -142,8 +139,8 @@ function drawSolmarinaSpeed(ctx) {
   ctx.fillText('km/h', 1252, 656);
   ctx.font = '13px sans-serif'; ctx.fillStyle = '#ffffff'; ctx.textAlign = 'left';
   const def = CONFIG.cars[p.car.type];
-  ctx.fillText(def ? def.name : p.car.type, 1110, 680);
-  drawSolmarinaWeaponSlots(ctx, 1110, 694);
+  ctx.fillText(def ? def.name : p.car.type, 1110, 674);
+  drawSolmarinaWeaponSlots(ctx, 1110, 682);
 }
 function drawSolmarinaWeaponSlots(ctx, x, y) {
   const slots = [{ key: 'fists', label: 'FISTS' }, { key: 'pistol', label: 'PISTOL' }];
@@ -158,7 +155,7 @@ function drawSolmarinaWeaponSlots(ctx, x, y) {
   });
 }
 function drawSolmarinaMinimap(ctx) {
-  const size = 180, ox = 16, oy = 524, scale = size / CONFIG.worldSize;
+  const size = 180, ox = 16, oy = 508, scale = size / CONFIG.worldSize;
   solmarinaPanel(ctx, ox - 6, oy - 6, size + 12, size + 12);
   ctx.save();
   ctx.beginPath(); ctx.rect(ox, oy, size, size); ctx.clip();
@@ -187,7 +184,7 @@ function drawSolmarinaMinimap(ctx) {
   ctx.strokeStyle = '#000'; ctx.stroke();
   ctx.restore();
   ctx.fillStyle = '#ffffff'; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'left';
-  ctx.fillText('SOLMARINA', ox, oy - 10 + 186 + 4);
+  ctx.fillText('SOLMARINA', ox, oy - 12);
 }
 function drawSolmarinaSubtitles(ctx) {
   if (!G.dialog || G.time > G.dialog.until) return;
@@ -214,6 +211,9 @@ function drawSolmarinaDistrict(ctx) {
   const d = solmarinaDistrictAt(G.player.x, G.player.y);
   ctx.fillStyle = 'rgba(255,255,255,0.85)'; ctx.font = 'bold 14px sans-serif'; ctx.textAlign = 'center';
   ctx.fillText(d.name.toUpperCase(), 640, 30);
+  const rank = CONFIG.respectRanks[Math.min(4, Math.floor(G.stats.missions / 2))];
+  ctx.fillStyle = '#ffd23a'; ctx.font = 'bold 12px sans-serif';
+  ctx.fillText('RESPECT: ' + rank.toUpperCase(), 640, 50);
 }
 function drawSolmarinaTitle(ctx) {
   ctx.fillStyle = 'rgba(20, 8, 30, 0.45)'; ctx.fillRect(0, 0, 1280, 720);

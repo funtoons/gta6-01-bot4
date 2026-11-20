@@ -3,6 +3,8 @@
 function updateSolmarinaPedestrians(dt) {
   const p = G.player;
   for (const ped of G.peds) {
+    // Gang members and foot cops have their own AI (combat.js / police.js).
+    if (ped.gang || ped.cop) continue;
     ped.moving = false;
     if (ped.fleeing) {
       const dx = ped.x - p.x, dy = ped.y - p.y, d = Math.hypot(dx, dy) || 1;
