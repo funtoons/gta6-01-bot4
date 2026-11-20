@@ -8,9 +8,9 @@ function startSolmarinaMission(id) {
   G.missionKills = 0;
   G.lastMissionId = id;
   // Mission props: the marked car for a steal job, Zola's car for the drive.
-  if (id === 1) spawnSolmarinaCar('coupe', 1330, 1330, 0, 'parked');
+  if (id === 1) spawnSolmarinaCar('coupe', 1290, 1350, 1.57, 'parked');
   if (id === 2) spawnSolmarinaCar('muscle', 1980, 580, 0, 'parked');
-  if (id === 6) spawnSolmarinaCar('van', 2120, 580, 0, 'parked');
+  if (id === 6) spawnSolmarinaCar('van', 2210, 600, 0, 'parked');
   showSolmarinaDialog('Mama Zola', def.briefing);
   G.objective = def.steps[0].text;
   playGameSound('mission', 0.5);
@@ -37,8 +37,8 @@ function updateSolmarinaMissions(dt) {
     }
     if (d < (step.r || 80)) {
       if (step.type === 'steal') {
-        const car = nearestSolmarinaCar(tx, ty, 120);
-        if (car && car.driver === 'player') { advanceSolmarinaMission(); return; }
+        const inMarkedCar = G.player.car && Math.hypot(G.player.car.x - tx, G.player.car.y - ty) < 140;
+        if (inMarkedCar) { advanceSolmarinaMission(); return; }
         G.objective = step.text + ' — get in the marked car';
         G.marker = { x: tx, y: ty, r: 120 };
         return;
