@@ -1,0 +1,5 @@
+/* Solmarina page styling: a dark sunset frame around the game canvas. */
+html, body { margin: 0; padding: 0; background: #160a20; }
+#wrap { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+#game { display: block; width: min(1280px, 100vw); height: auto; background: #a8895a; box-shadow: 0 0 60px rgba(255, 140, 60, 0.25); cursor: crosshair; }
+#help { color: rgba(255, 255, 255, 0.65); font: 14px sans-serif; text-align: center; margin: 10px 0 0; }
