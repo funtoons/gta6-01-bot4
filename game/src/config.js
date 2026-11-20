@@ -49,7 +49,7 @@ function solmarinaConfig() {
         { type: 'fight', count: 5, text: 'Clear the warehouse crew (0/5)' },
         { type: 'collect', count: 1, spots: [[2050, 810]], r: 60, text: 'Grab the cash' } ] },
       { id: 6, name: 'Payday', reward: 50000, briefing: 'The Gulls cash truck leaves the docks at dusk. Take it, survive the four-star chase, and bring it to Zola. Your debt ends tonight.', steps: [
-        { type: 'steal', x: 2120, y: 580, r: 90, text: 'Steal the Gulls cash truck' },
+        { type: 'steal', x: 2210, y: 600, r: 90, text: 'Steal the Gulls cash truck' },
         { type: 'drive', x: 1290, y: 1290, r: 90, text: 'Bring the truck to Zola\'s Diner' },
         { type: 'survive', seconds: 20, text: 'Survive the chase (20s)' } ] },
     ],
