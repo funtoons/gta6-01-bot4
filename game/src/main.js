@@ -39,10 +39,10 @@ function bootSolmarinaGame() {
 function resetSolmarinaActors() {
   G.cars = []; G.peds = []; G.cops = [];
   const spots = [
-    ['sedan', 900, 900, 0], ['coupe', 1520, 1060, 1.57], ['muscle', 1060, 1520, 3.14],
-    ['van', 1980, 1290, 0], ['taxi', 1290, 1520, 1.57], ['sedan', 1750, 1750, 0],
-    ['coupe', 580, 580, 0], ['sedan', 2200, 2200, 1.57], ['muscle', 830, 1060, 0],
-    ['taxi', 1980, 1980, 3.14], ['sedan', 1290, 1750, 0], ['van', 1060, 600, 1.57],
+    ['sedan', 830, 1000, 1.57], ['coupe', 1060, 1200, 4.71], ['muscle', 1520, 830, 0],
+    ['van', 1980, 1060, 3.14], ['taxi', 1290, 1750, 1.57], ['sedan', 1750, 1520, 0],
+    ['coupe', 600, 900, 1.57], ['sedan', 2210, 1290, 4.71], ['muscle', 830, 1980, 0],
+    ['taxi', 1980, 2210, 1.57], ['sedan', 1290, 2210, 0], ['van', 1060, 370, 4.71],
   ];
   for (const s of spots) spawnSolmarinaCar(s[0], s[1], s[2], s[3], 'parked');
   for (let i = 0; i < 14; i++) spawnSolmarinaTrafficCar();
@@ -101,7 +101,9 @@ function handleSolmarinaMenu(action) {
 function runSolmarinaLoop(t) {
   requestAnimationFrame(runSolmarinaLoop);
   if (!G) return;
-  const dt = Math.min(0.05, 0.016);
+  const now = t || 0;
+  const dt = G.lastT ? Math.min(0.05, Math.max(0.001, (now - G.lastT) / 1000)) : 0.016;
+  G.lastT = now;
   G.time += dt;
   G.frame++;
   if (G.state === 'play') G.stats.playTime += dt;
